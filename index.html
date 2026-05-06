@@ -2261,14 +2261,41 @@
         }
       }
 
-      /* Focused */
+      /* ── View Transitions ─────────────────────────────────────── */
+      /* Root cross-fade — short, so per-card morphing is the star  */
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation-duration: 180ms;
+        animation-timing-function: ease-out;
+      }
+      /* Per-card group: controls the FLIP position+size morph      */
+      ::view-transition-group(cap),
+      ::view-transition-group(uc),
+      ::view-transition-group(py-parent) {
+        animation-duration: 380ms;
+        animation-timing-function: cubic-bezier(0.34, 1.15, 0.64, 1);
+      }
+      /* Keep card content crisp during morph                        */
+      ::view-transition-old(cap),
+      ::view-transition-new(cap),
+      ::view-transition-old(uc),
+      ::view-transition-new(uc) {
+        animation-duration: 200ms;
+        animation-timing-function: ease-out;
+        mix-blend-mode: normal;
+      }
+
+      /* Focused view gap: normal vs split (active child + UC row) */
       .py-focused {
         position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 80px;
+        gap: 72px;
         padding-top: 14px;
+      }
+      .py-focused.py-split {
+        gap: 40px;
       }
       .py-focused-parent-wrap {
         animation: parentLandIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -2328,6 +2355,79 @@
       }
       .py-children-row .py-card {
         animation: childSlideIn 0.55s cubic-bezier(0.2, 0.7, 0.3, 1.1) backwards;
+      }
+
+      /* Siblings row — dimmed smaller cards when a child is expanded */
+      .py-siblings-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+        max-width: 1100px;
+        position: relative;
+        z-index: 2;
+      }
+      .py-siblings-row .py-card {
+        min-width: 150px;
+        max-width: 190px;
+        min-height: 74px;
+        opacity: 0.42;
+        transform: scale(0.93);
+        transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+        animation: childSlideIn 0.5s cubic-bezier(0.2, 0.7, 0.3, 1.1) backwards;
+        cursor: pointer;
+      }
+      .py-siblings-row .py-card:hover {
+        opacity: 0.78;
+        transform: scale(0.96);
+      }
+      .py-siblings-row .py-card .py-card-title {
+        font-size: 12px;
+      }
+      .py-siblings-row .py-card .py-card-subtitle,
+      .py-siblings-row .py-card .py-card-status {
+        font-size: 10px;
+      }
+
+      /* Active/selected child — its own centered row */
+      .py-active-child-wrap {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        z-index: 3;
+      }
+      .py-active-child-wrap .py-card {
+        min-width: 280px;
+        max-width: 340px;
+        border-color: var(--halo-border, rgba(140, 210, 30, 0.7)) !important;
+        box-shadow:
+          0 0 0 2px rgba(140, 210, 30, 0.25),
+          0 0 48px var(--halo-col),
+          0 20px 45px rgba(0, 0, 0, 0.55) !important;
+        animation: activeChildIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+      }
+      .py-active-child-wrap .py-card::after {
+        width: 100% !important;
+      }
+      @keyframes activeChildIn {
+        from { opacity: 0; transform: translateY(20px) scale(0.9); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
+      /* UC cards row */
+      .py-uc-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        justify-content: center;
+        max-width: 1100px;
+        position: relative;
+        z-index: 2;
+      }
+      .py-uc-row .py-card {
+        min-width: 180px;
+        max-width: 220px;
+        animation: childSlideIn 0.45s cubic-bezier(0.2, 0.7, 0.3, 1.1) backwards;
       }
       @keyframes childSlideIn {
         from {
@@ -5425,12 +5525,13 @@
       function statusTextFor(cap) {
         return isCompleted(cap) ? "AI live" : "Planned";
       }
-      function cardHTML(cap) {
+      function cardHTML(cap, vtName) {
         const done = isCompleted(cap);
         const col = groupColorFor(cap);
         const haloCol = done ? "rgba(140,210,30,0.32)" : `${col}30`;
         const haloBorder = done ? "rgba(140,210,30,0.55)" : `${col}80`;
-        const style = `--card-border: ${col}33; --halo-col: ${haloCol}; --halo-border: ${haloBorder};`;
+        const vt = vtName ? ` view-transition-name: ${vtName};` : "";
+        const style = `--card-border: ${col}33; --halo-col: ${haloCol}; --halo-border: ${haloBorder};${vt}`;
         return `<div class="py-card ${done ? "has-ai" : ""}" data-cap="${cap.id}" style="${style}">
     <div class="py-card-title">${cap.name}</div>
     <div class="py-card-subtitle">${subtitleFor(cap)}</div>
@@ -5444,42 +5545,70 @@
           ? renderPyramidFocused(focus)
           : renderPyramidOverview();
 
-        // Update breadcrumb in app bar
+        // Pre-build breadcrumb so the callback stays synchronous
         const ctx = document.getElementById("crumb-context");
+        let applyBreadcrumb = () => {};
         if (ctx) {
-          if (!focus) ctx.textContent = "Hierarchical view";
-          else {
+          if (!focus) {
+            applyBreadcrumb = () => { ctx.textContent = "Hierarchical view"; };
+          } else {
             const crumbs = [];
             let c = focus;
-            while (c && c !== ROOT) {
-              crumbs.unshift(c);
-              c = parentOf(c);
-            }
-            ctx.innerHTML =
+            while (c && c !== ROOT) { crumbs.unshift(c); c = parentOf(c); }
+            const crumbHTML =
               `<span class="crumb" data-crumb="root" style="cursor:pointer">All functions</span>` +
-              crumbs
-                .map(
-                  (c, i) =>
-                    `<span class="sep" style="margin:0 4px">›</span><span class="crumb ${i === crumbs.length - 1 ? "current" : ""}" data-crumb="${c.id}" style="cursor:pointer">${c.name}</span>`,
-                )
-                .join("");
+              crumbs.map((c, i) =>
+                `<span class="sep" style="margin:0 4px">›</span>` +
+                `<span class="crumb ${i === crumbs.length - 1 ? "current" : ""}" data-crumb="${c.id}" style="cursor:pointer">${c.name}</span>`
+              ).join("");
+            applyBreadcrumb = () => { ctx.innerHTML = crumbHTML; };
           }
         }
 
-        pyEl.innerHTML = body;
-        wirePyramidEvents();
-        // re-wire breadcrumb in app bar
-        document.querySelectorAll("#crumb-context [data-crumb]").forEach((el) =>
-          el.addEventListener("click", () => {
-            const id = el.dataset.crumb;
-            state.pyramidFocus = id === "root" ? null : CAPS_BY_ID.get(id);
-            renderPyramid();
-          }),
-        );
-        if (focus) requestAnimationFrame(drawPyramidConnectors);
+        const wireCrumbs = () => {
+          document.querySelectorAll("#crumb-context [data-crumb]").forEach((el) =>
+            el.addEventListener("click", () => {
+              const id = el.dataset.crumb;
+              state.pyramidFocus = id === "root" ? null : CAPS_BY_ID.get(id);
+              _ucExpanded = null;
+              renderPyramid();
+            }),
+          );
+        };
+
+        // Fully synchronous — no await, so startViewTransition never hangs
+        const doUpdate = () => {
+          applyBreadcrumb();
+          pyEl.innerHTML = body;
+          wirePyramidEvents();
+          wireCrumbs();
+        };
+
+        if (document.startViewTransition) {
+          const t = document.startViewTransition(doUpdate);
+          // Draw connectors once the new DOM is rendered and layout is ready.
+          // t.ready resolves after the new screenshot is captured — safe to call
+          // getBoundingClientRect() at that point.
+          if (focus) {
+            t.ready
+              .then(() => requestAnimationFrame(drawPyramidConnectors))
+              .catch(() => {});
+          }
+        } else {
+          // Fallback: quick opacity fade
+          pyEl.style.transition = "opacity 0.14s ease";
+          pyEl.style.opacity = "0";
+          setTimeout(() => {
+            doUpdate();
+            pyEl.style.opacity = "1";
+            if (focus) requestAnimationFrame(drawPyramidConnectors);
+          }, 110);
+        }
       }
       /* Tracks which L1s are expanded inline */
       const _treeExpanded = new Set();
+      /* Tracks which child cap has its UC row open in the focused view */
+      let _ucExpanded = null;
 
       function renderPyramidOverview() {
         const totalL1 = DATA.capabilities.filter((c) => c.level === 1).length;
@@ -5568,32 +5697,61 @@
       function renderPyramidFocused(focus) {
         const kids = childrenOf(focus);
         const ucs = USECASES_BY_CAPABILITY.get(focus.id) || [];
-        let body = `<div class="py-focused">
+
+        const activeChild = _ucExpanded
+          ? kids.find((k) => k.id === _ucExpanded) || null
+          : null;
+        const activeUCs = activeChild
+          ? (USECASES_BY_CAPABILITY.get(activeChild.id) || [])
+          : [];
+        const hasExpansion = activeChild && activeUCs.length > 0;
+
+        // Parent card always has a stable view-transition-name
+        const parentVT = `py-parent-${focus.id.replace(/[^a-z0-9]/gi, "-")}`;
+        let body = `<div class="py-focused${hasExpansion ? " py-split" : ""}">
     <svg class="py-connectors" id="py-connectors"></svg>
-    <div class="py-focused-parent-wrap">${cardHTML(focus)}</div>`;
+    <div class="py-focused-parent-wrap">${cardHTML(focus, parentVT)}</div>`;
+
         if (kids.length > 0) {
-          body += `<div class="py-children-row">${kids.map(cardHTML).join("")}</div>`;
+          if (hasExpansion) {
+            // ── Split: siblings (dimmed) → active child → UC row ──
+            const siblings = kids.filter((k) => k.id !== activeChild.id);
+            if (siblings.length > 0) {
+              body += `<div class="py-siblings-row">${siblings.map((k) =>
+                cardHTML(k, `cap-${k.id.replace(/[^a-z0-9]/gi, "-")}`)).join("")}</div>`;
+            }
+
+            // Active child — its own centred row with stable VT name
+            const aVT = `cap-${activeChild.id.replace(/[^a-z0-9]/gi, "-")}`;
+            body += `<div class="py-active-child-wrap">${cardHTML(activeChild, aVT)}</div>`;
+
+            // UC cards — each gets its own VT name so they morph when switching children
+            const sortedUCs = [...activeUCs].sort((a, b) =>
+              a.status === "completed" && b.status !== "completed" ? -1 : 1);
+            body += `<div class="py-uc-row" id="py-uc-row">${sortedUCs.map((uc) =>
+              ucCardInlineHTML(uc, activeChild, `uc-${uc.id.replace(/[^a-z0-9]/gi, "-")}`)).join("")}</div>`;
+          } else {
+            // ── Normal: all children in one row ──
+            body += `<div class="py-children-row">${kids.map((k) =>
+              cardHTML(k, `cap-${k.id.replace(/[^a-z0-9]/gi, "-")}`)).join("")}</div>`;
+          }
         } else if (ucs.length > 0) {
-          body += `<div class="py-children-row">${ucs.map((uc) => ucCardInlineHTML(uc, focus)).join("")}</div>`;
+          body += `<div class="py-children-row">${ucs.map((uc) =>
+            ucCardInlineHTML(uc, focus, `uc-${uc.id.replace(/[^a-z0-9]/gi, "-")}`)).join("")}</div>`;
         } else {
-          body += `<div style="text-align:center; color:var(--text-faint); font-size:13px; padding:32px;">No sub-capabilities or use cases under "${focus.name}" yet.</div>`;
+          body += `<div style="text-align:center;color:var(--text-faint);font-size:13px;padding:32px;">No sub-capabilities or use cases under "${focus.name}" yet.</div>`;
         }
+
         body += `</div>`;
-        setTimeout(() => {
-          document
-            .querySelectorAll(".py-children-row .py-card")
-            .forEach((el, i) => {
-              el.style.animationDelay = 0.15 + i * 0.04 + "s";
-            });
-        }, 0);
         return body;
       }
-      function ucCardInlineHTML(uc, focus) {
+      function ucCardInlineHTML(uc, focus, vtName) {
         const col = groupColorFor(focus);
         const done = uc.status === "completed";
         const haloCol = done ? "rgba(140,210,30,0.32)" : `${col}30`;
         const haloBorder = done ? "rgba(140,210,30,0.55)" : `${col}80`;
-        const style = `--card-border: ${col}33; --halo-col: ${haloCol}; --halo-border: ${haloBorder};`;
+        const vt = vtName ? ` view-transition-name: ${vtName};` : "";
+        const style = `--card-border: ${col}33; --halo-col: ${haloCol}; --halo-border: ${haloBorder};${vt}`;
         const go = uc.goLiveDate ? formatDate(uc.goLiveDate) : "TBD";
         return `<div class="py-card ${done ? "has-ai" : ""}" data-uc="${uc.id}" style="${style}">
     <div class="py-card-title">${uc.title}</div>
@@ -5606,39 +5764,73 @@
         const svg = document.getElementById("py-connectors");
         if (!svg) return;
         const focusedWrap = pyEl.querySelector(".py-focused");
-        const parentCard = pyEl.querySelector(
-          ".py-focused-parent-wrap .py-card",
-        );
-        const children = pyEl.querySelectorAll(".py-children-row .py-card");
-        if (!focusedWrap || !parentCard || children.length === 0) {
-          svg.innerHTML = "";
-          return;
-        }
+        const parentCard = pyEl.querySelector(".py-focused-parent-wrap .py-card");
+        if (!focusedWrap || !parentCard) { svg.innerHTML = ""; return; }
 
         const fRect = focusedWrap.getBoundingClientRect();
         const pRect = parentCard.getBoundingClientRect();
+        const px = pRect.left + pRect.width / 2 - fRect.left;
+        const py2 = pRect.bottom - fRect.top;
 
         svg.setAttribute("width", focusedWrap.offsetWidth);
         svg.setAttribute("height", focusedWrap.offsetHeight);
 
-        const px = pRect.left + pRect.width / 2 - fRect.left;
-        const py = pRect.bottom - fRect.top;
-
         let paths = "";
-        children.forEach((c, i) => {
-          const r = c.getBoundingClientRect();
-          const cx = r.left + r.width / 2 - fRect.left;
-          const cy = r.top - fRect.top;
-          const midY = (py + cy) / 2;
-          const d = `M ${px} ${py} C ${px} ${midY}, ${cx} ${midY}, ${cx} ${cy}`;
-          const col =
-            getComputedStyle(c).getPropertyValue("--halo-border").trim() ||
-            "rgba(140,210,30,0.55)";
-          const delay = 0.3 + i * 0.05;
-          const dotDelay = delay + 0.75;
-          paths += `<path class="py-connector" d="${d}" style="--connector-col:${col}; animation-delay:${delay}s" />`;
-          paths += `<circle class="py-connector-dot" cx="${cx}" cy="${cy}" r="3.5" style="--connector-col:${col}; animation-delay:${dotDelay}s" />`;
-        });
+
+        function addPath(x1, y1, x2, y2, col, delay, dotDelay, opacity, dotR) {
+          opacity = opacity !== undefined ? opacity : 1;
+          dotR = dotR !== undefined ? dotR : 3.5;
+          const midY = (y1 + y2) / 2;
+          const d = `M ${x1} ${y1} C ${x1} ${midY}, ${x2} ${midY}, ${x2} ${y2}`;
+          const opStr = opacity < 1 ? `opacity:${opacity};` : "";
+          paths += `<path class="py-connector" d="${d}" style="--connector-col:${col}; animation-delay:${delay}s; ${opStr}" />`;
+          paths += `<circle class="py-connector-dot" cx="${x2}" cy="${y2}" r="${dotR}" style="--connector-col:${col}; animation-delay:${dotDelay}s; ${opStr}" />`;
+        }
+
+        if (_ucExpanded) {
+          // ── Split layout mode ──
+          const siblings = pyEl.querySelectorAll(".py-siblings-row .py-card");
+          const activeCard = pyEl.querySelector(".py-active-child-wrap .py-card");
+          const ucCards = pyEl.querySelectorAll("#py-uc-row .py-card");
+
+          // Parent → siblings (dimmed, thin lines)
+          siblings.forEach((c, i) => {
+            const r = c.getBoundingClientRect();
+            const col = getComputedStyle(c).getPropertyValue("--halo-border").trim() || "rgba(140,210,30,0.4)";
+            addPath(px, py2, r.left + r.width / 2 - fRect.left, r.top - fRect.top,
+              col, 0.25 + i * 0.035, 0.25 + i * 0.035 + 0.65, 0.28, 2.5);
+          });
+
+          // Parent → active child (bright, prominent line)
+          if (activeCard) {
+            const ar = activeCard.getBoundingClientRect();
+            const ax = ar.left + ar.width / 2 - fRect.left;
+            const ay = ar.top - fRect.top;
+            const ay2 = ar.bottom - fRect.top;
+            const acol = getComputedStyle(activeCard).getPropertyValue("--halo-border").trim() || "rgba(140,210,30,0.8)";
+            addPath(px, py2, ax, ay, acol, 0.15, 0.85, 1, 4);
+
+            // Active child → UC cards (short direct lines)
+            ucCards.forEach((uc, i) => {
+              const ur = uc.getBoundingClientRect();
+              const ux = ur.left + ur.width / 2 - fRect.left;
+              const uy = ur.top - fRect.top;
+              const ucol = getComputedStyle(uc).getPropertyValue("--halo-border").trim() || acol;
+              addPath(ax, ay2, ux, uy, ucol, 0.08 + i * 0.04, 0.08 + i * 0.04 + 0.5, 1, 3);
+            });
+          }
+        } else {
+          // ── Normal layout: parent → all children ──
+          const children = pyEl.querySelectorAll(".py-children-row .py-card");
+          if (children.length === 0) { svg.innerHTML = ""; return; }
+          children.forEach((c, i) => {
+            const r = c.getBoundingClientRect();
+            const col = getComputedStyle(c).getPropertyValue("--halo-border").trim() || "rgba(140,210,30,0.55)";
+            addPath(px, py2, r.left + r.width / 2 - fRect.left, r.top - fRect.top,
+              col, 0.3 + i * 0.05, 0.3 + i * 0.05 + 0.75);
+          });
+        }
+
         svg.innerHTML = paths;
       }
 
@@ -5694,7 +5886,7 @@
             renderPanel();
           }),
         );
-        // L2 click — select and drill if it has its own children/UCs
+        // Cap card click — behaviour depends on context
         pyEl.querySelectorAll("[data-cap]").forEach((el) =>
           el.addEventListener("click", (ev) => {
             ev.stopPropagation();
@@ -5707,15 +5899,45 @@
               ev.clientX - pyRect.left,
               ev.clientY - pyRect.top + pyEl.scrollTop,
             );
-            if (
-              childrenOf(cap).length > 0 ||
-              (USECASES_BY_CAPABILITY.get(cap.id) || []).length > 0
-            ) {
-              state.pyramidFocus = cap;
-              renderPyramid();
+
+            if (state.pyramidFocus) {
+              // ── In focused view ──
+              const focusKids = childrenOf(state.pyramidFocus);
+              const isDirectChild = focusKids.some((k) => k.id === cap.id);
+
+              if (isDirectChild) {
+                const hasKids = childrenOf(cap).length > 0;
+                const capUCs = USECASES_BY_CAPABILITY.get(cap.id) || [];
+
+                if (hasKids) {
+                  // Drill deeper into sub-capabilities
+                  _ucExpanded = null;
+                  state.pyramidFocus = cap;
+                  renderPyramid();
+                } else {
+                  // Toggle this child's UC row — always re-render so other expansions close
+                  // Clicking the active child again collapses; clicking any other switches to it
+                  if (capUCs.length > 0) {
+                    _ucExpanded = _ucExpanded === cap.id ? null : cap.id;
+                  } else {
+                    // Card has no UCs — just collapse any open UC row
+                    _ucExpanded = null;
+                  }
+                  renderPyramid();
+                }
+              }
+              // Clicking the parent card itself — just update panel (no nav change)
             } else {
-              renderPanel();
+              // ── In tree overview ──
+              const hasKids = childrenOf(cap).length > 0;
+              const capUCs = USECASES_BY_CAPABILITY.get(cap.id) || [];
+              if (hasKids || capUCs.length > 0) {
+                _ucExpanded = null;
+                state.pyramidFocus = cap;
+                renderPyramid();
+              }
             }
+            renderPanel();
           }),
         );
         pyEl.querySelectorAll("[data-uc]").forEach((el) =>
@@ -5806,16 +6028,22 @@
         }
 
         if (ucs.length > 0) {
-          ucs.sort(
-            (a, b) =>
-              (a.status === "completed" ? 0 : 1) -
-              (b.status === "completed" ? 0 : 1),
-          );
-          html += `<div class="section"><div class="section-label">AI use cases in this branch</div>`;
-          ucs.forEach((uc) => {
-            html += ucCardHTML(uc);
-          });
-          html += `</div>`;
+          // When an explicit UC is shown at the top, exclude it from the "branch" list
+          const branchUCs = explicitUC
+            ? ucs.filter((u) => u.id !== explicitUC.id)
+            : ucs;
+          if (branchUCs.length > 0) {
+            branchUCs.sort(
+              (a, b) =>
+                (a.status === "completed" ? 0 : 1) -
+                (b.status === "completed" ? 0 : 1),
+            );
+            html += `<div class="section"><div class="section-label">AI use cases in this branch</div>`;
+            branchUCs.forEach((uc) => {
+              html += ucCardHTML(uc);
+            });
+            html += `</div>`;
+          }
         }
 
         if (kids.length === 0 && ucs.length === 0) {
