@@ -74,8 +74,239 @@
           ),
           linear-gradient(180deg, #04101f 0%, #06182c 100%);
       }
-      * {
-        box-sizing: border-box;
+
+      /* ── Light mode overrides ─────────────────────────────────── */
+      html.light {
+        --bg: #f0f4f8;
+        --bg-stage: #e8eef5;
+        --bg-panel: rgba(255, 255, 255, 0.92);
+        --bg-panel-solid: #ffffff;
+        --bg-elev: #ffffff;
+        --bg-elev-2: #f5f8fb;
+
+        --border: rgba(100, 160, 30, 0.18);
+        --border-strong: rgba(100, 160, 30, 0.38);
+        --border-cool: rgba(0, 0, 0, 0.08);
+        --border-cool-2: rgba(0, 0, 0, 0.14);
+
+        --text: #0d1f33;
+        --text-muted: #3d5670;
+        --text-faint: #6e8aa4;
+
+        --gray-node: #7a95ae;
+        --link: rgba(60, 100, 140, 0.13);
+
+        --shadow-lg:
+          0 24px 60px -12px rgba(0, 0, 0, 0.13),
+          0 0 0 1px rgba(0, 0, 0, 0.06) inset;
+
+        --stage-bg:
+          radial-gradient(
+            ellipse 80% 60% at 50% 0%,
+            rgba(0, 195, 217, 0.08) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 70% 60% at 50% 100%,
+            rgba(140, 210, 30, 0.06) 0%,
+            transparent 60%
+          ),
+          linear-gradient(180deg, #f0f4f8 0%, #e8eef5 100%);
+      }
+
+      /* Surface overrides for light mode */
+      html.light .app-bar {
+        background: rgba(240, 244, 248, 0.92) !important;
+        border-bottom-color: rgba(0,0,0,0.1) !important;
+      }
+      html.light .side-panel {
+        background: #ffffff !important;
+        border-left-color: rgba(0,0,0,0.08) !important;
+      }
+      html.light .py-card {
+        background: linear-gradient(135deg, #ffffff, #f5f8fc) !important;
+        border-color: rgba(0,0,0,0.1) !important;
+        color: var(--text) !important;
+      }
+      html.light .py-card:hover {
+        border-color: rgba(100, 160, 30, 0.45) !important;
+        box-shadow: 0 8px 28px rgba(0,0,0,0.12) !important;
+      }
+      html.light .py-card.has-ai {
+        background: linear-gradient(135deg, #f4fbea, #edf8d8) !important;
+      }
+      html.light .tree-col {
+        background: rgba(255,255,255,0.7) !important;
+        border-color: rgba(0,0,0,0.07) !important;
+      }
+      html.light .tree-l1 {
+        background: rgba(255,255,255,0.8) !important;
+        border-color: rgba(0,0,0,0.07) !important;
+      }
+      html.light .tree-l1.has-ai {
+        background: linear-gradient(135deg, rgba(244,251,234,0.9), rgba(237,248,216,0.8)) !important;
+      }
+      html.light .tree-l2 {
+        color: var(--text-muted);
+      }
+      html.light .tree-l2:hover {
+        background: rgba(140,210,30,0.08) !important;
+        color: var(--text) !important;
+      }
+      html.light .layout-btn,
+      html.light .reset-btn,
+      html.light .icon-btn {
+        background: rgba(0,0,0,0.05) !important;
+        border-color: rgba(0,0,0,0.1) !important;
+        color: var(--text-muted) !important;
+      }
+      html.light .layout-btn:hover,
+      html.light .reset-btn:hover,
+      html.light .icon-btn:hover {
+        background: rgba(0,0,0,0.09) !important;
+        color: var(--text) !important;
+      }
+      html.light .layout-btn.active {
+        background: rgba(140,210,30,0.15) !important;
+        border-color: rgba(140,210,30,0.4) !important;
+        color: #3a6600 !important;
+      }
+      html.light .search-input {
+        background: rgba(255,255,255,0.8) !important;
+        border-color: rgba(0,0,0,0.12) !important;
+        color: var(--text) !important;
+      }
+      html.light .search-input:focus {
+        border-color: rgba(140,210,30,0.5) !important;
+        background: #fff !important;
+      }
+      html.light .uc-card {
+        background: #ffffff !important;
+        border-color: rgba(0,0,0,0.08) !important;
+      }
+      html.light .uc-card:hover {
+        border-color: rgba(140,210,30,0.4) !important;
+      }
+      html.light .section-label {
+        color: var(--text-faint) !important;
+        border-bottom-color: rgba(0,0,0,0.07) !important;
+      }
+      html.light .panel-group-tag {
+        background: rgba(0,0,0,0.06) !important;
+        color: var(--text-muted) !important;
+      }
+      html.light .panel-title {
+        color: var(--text) !important;
+      }
+      html.light .filter-bar {
+        background: rgba(240,244,248,0.85) !important;
+        border-bottom-color: rgba(0,0,0,0.07) !important;
+      }
+      html.light .filter-chip {
+        background: rgba(0,0,0,0.05) !important;
+        border-color: rgba(0,0,0,0.1) !important;
+        color: var(--text-muted) !important;
+      }
+      html.light .filter-chip.active {
+        background: rgba(140,210,30,0.15) !important;
+        border-color: rgba(140,210,30,0.4) !important;
+        color: #3a6600 !important;
+      }
+      html.light .ambient { opacity: 0.3; }
+      html.light .node circle { stroke-opacity: 0.5; }
+      html.light .crumb { color: var(--text-muted) !important; }
+      html.light .crumb.current { color: var(--text) !important; }
+
+      /* Landing page theme toggle — sized to match CTA buttons */
+      .theme-toggle-landing {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        border: 1px solid var(--border-cool-2);
+        background: rgba(255,255,255,0.04);
+        flex-shrink: 0;
+        align-self: stretch;
+        color: var(--text-muted);
+      }
+      .theme-toggle-landing:hover {
+        background: rgba(140,210,30,0.12);
+        border-color: rgba(140,210,30,0.45);
+        color: var(--ib-lime);
+      }
+      .theme-toggle-landing svg {
+        width: 18px;
+        height: 18px;
+      }
+      html.light .theme-toggle-landing {
+        background: rgba(0,0,0,0.04) !important;
+        border-color: rgba(0,0,0,0.12) !important;
+        color: var(--text-muted) !important;
+      }
+      html.light .theme-toggle-landing:hover {
+        background: rgba(140,210,30,0.12) !important;
+        border-color: rgba(140,210,30,0.45) !important;
+        color: #3a6600 !important;
+      }
+
+      /* App-bar theme toggle: pull it out of the stacking context so it's always clickable */
+      .app-bar-actions {
+        position: relative;
+        z-index: 10;
+      }
+      .app-bar .theme-toggle {
+        position: relative;
+        z-index: 10;
+        pointer-events: all;
+      }
+      .theme-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        border: 1px solid var(--border-cool-2);
+        background: rgba(255,255,255,0.05);
+        cursor: pointer;
+        color: var(--text-muted);
+        transition: background 0.2s, color 0.2s, border-color 0.2s;
+        flex-shrink: 0;
+      }
+      .theme-toggle:hover {
+        background: rgba(140,210,30,0.1);
+        border-color: rgba(140,210,30,0.3);
+        color: var(--ib-lime);
+      }
+      .theme-toggle .icon-sun { display: none; }
+      .theme-toggle .icon-moon { display: block; }
+      html.light .theme-toggle .icon-sun { display: block; }
+      html.light .theme-toggle .icon-moon { display: none; }
+      html.light .theme-toggle {
+        background: rgba(0,0,0,0.05) !important;
+        border-color: rgba(0,0,0,0.1) !important;
+        color: var(--text-muted) !important;
+      }
+      html.light .theme-toggle:hover {
+        background: rgba(0,0,0,0.09) !important;
+        color: var(--text) !important;
+      }
+
+      /* Vertical divider between groups in the app bar */
+      .app-bar-divider {
+        width: 1px;
+        height: 22px;
+        background: var(--border-cool-2);
+        flex-shrink: 0;
+        margin: 0 4px;
+      }
+      /* App bar variant of theme-toggle: slightly larger for better tap target */
+      .theme-toggle-appbar {
+        width: 36px;
+        height: 36px;
+      }
+      .theme-toggle-appbar svg {
+        width: 16px;
+        height: 16px;
       }
       html,
       body {
@@ -192,46 +423,236 @@
       }
 
       /* ============================================================
-   LANDING
+   LANDING — centered full-viewport hero
    ============================================================ */
       #view-landing {
         padding: 0;
       }
       #view-landing.active {
-        display: block;
-        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
         height: 100vh;
-      }
-      #view-landing.active::-webkit-scrollbar {
-        width: 8px;
-      }
-      #view-landing.active::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      #view-landing.active::-webkit-scrollbar-thumb {
-        background: rgba(140, 210, 30, 0.18);
-        border-radius: 4px;
-      }
-      #view-landing.active::-webkit-scrollbar-thumb:hover {
-        background: rgba(140, 210, 30, 0.3);
+        overflow: hidden;
       }
 
       .landing-shell {
         position: relative;
         z-index: 2;
-        min-height: 100%;
-        display: grid;
-        grid-template-rows: auto 1fr auto;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
         padding: 28px 56px 36px;
+        min-height: 0;
       }
 
+      /* Brand bar — fixed at top */
       .brand-bar {
         display: flex;
         align-items: center;
         justify-content: space-between;
         font-family: "Sora", sans-serif;
+        flex-shrink: 0;
       }
-      .brand-mark {
+
+      /* Main: fills remaining height and centers the hero block */
+      .landing-main {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 0;
+      }
+
+      /* The hero block — one tight centered column, no stretching */
+      .landing-top {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        max-width: 700px;
+        gap: 0;
+        /* No justify-content here — gap/margin controls spacing */
+      }
+
+      .landing-hero {
+        width: 100%;
+      }
+      .landing-hero .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--ib-lime);
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+        padding: 7px 16px;
+        border: 1px solid rgba(140, 210, 30, 0.28);
+        border-radius: 999px;
+        background: rgba(140, 210, 30, 0.06);
+      }
+      .landing-hero .eyebrow::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--ib-lime);
+        box-shadow: 0 0 8px var(--ib-lime);
+        flex-shrink: 0;
+      }
+      .landing-hero h1 {
+        font-family: "Sora", sans-serif;
+        font-size: clamp(28px, 3.5vw, 48px);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        margin: 0 0 18px;
+        color: var(--text);
+      }
+      .landing-hero h1 .accent {
+        background: linear-gradient(120deg, var(--ib-lime) 0%, var(--ib-lime-bright) 50%, var(--ib-cyan) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-style: italic;
+        font-weight: 700;
+      }
+      .landing-hero p {
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--text-faint);
+        margin: 0 auto;
+        max-width: 520px;
+      }
+
+      /* CTAs sit directly below the hero text */
+      .landing-top-cta {
+        margin-top: 36px;
+      }
+      .cta-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0 22px;
+        height: 48px;
+        border-radius: 12px;
+        border: 1px solid var(--border-cool-2);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text-muted);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        font-family: inherit;
+      }
+      .cta-btn .label { display: block; }
+      .cta-btn .icon {
+        display: flex;
+        align-items: center;
+        width: 18px;
+        height: 18px;
+        opacity: 0.6;
+        transition: opacity 0.2s, transform 0.2s;
+        flex-shrink: 0;
+      }
+      .cta-btn .icon svg { width: 100%; height: 100%; }
+      .cta-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.2);
+        color: var(--text);
+      }
+      .cta-btn:hover .icon { opacity: 1; transform: translateX(2px); }
+      .cta-btn.primary {
+        background: var(--ib-lime);
+        border-color: var(--ib-lime);
+        color: var(--ib-navy);
+        font-weight: 700;
+      }
+      .cta-btn.primary .icon { opacity: 1; }
+      .cta-btn.primary:hover {
+        background: var(--ib-lime-bright);
+        border-color: var(--ib-lime-bright);
+        color: var(--ib-navy);
+        box-shadow: 0 0 28px rgba(140,210,30,0.4), 0 8px 20px rgba(0,0,0,0.25);
+        transform: translateY(-1px);
+      }
+      .cta-btn.primary:hover .icon { transform: translateX(3px); }
+
+      /* Meta strip */
+      .landing-meta-strip {
+        margin-top: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .landing-meta-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 11.5px;
+        color: var(--text-faint);
+        font-weight: 500;
+      }
+      .landing-meta-pill .dot {
+        width: 5px; height: 5px;
+        border-radius: 50%;
+        background: var(--ib-lime);
+        opacity: 0.8;
+        flex-shrink: 0;
+      }
+      .landing-meta-pill .dot.cyan { background: var(--ib-cyan); }
+      .landing-meta-pill .dot.gray { background: var(--text-faint); opacity: 1; }
+      .landing-meta-divider {
+        width: 1px; height: 14px;
+        background: var(--border-cool-2);
+        flex-shrink: 0;
+      }
+
+      /* Dot-grid deco — covers landing-top, not the whole screen */
+      .landing-deco {
+        position: absolute;
+        inset: -100px -200px;
+        pointer-events: none;
+        z-index: -1;
+      }
+      .landing-deco::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(circle, rgba(140,210,30,0.08) 1px, transparent 1px);
+        background-size: 38px 38px;
+        mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 75%);
+      }
+      .landing-deco::after {
+        content: "";
+        position: absolute;
+        left: 50%; top: 50%;
+        transform: translate(-50%, -50%);
+        width: 700px; height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(140,210,30,0.05) 0%, transparent 65%);
+      }
+
+      @media (max-width: 640px) {
+        .landing-shell { padding: 20px 24px 28px; }
+        .cta-row { flex-direction: column; align-items: stretch; }
+        .cta-btn { justify-content: center; }
+        .landing-meta-strip { gap: 12px; }
+        .landing-meta-divider { display: none; }
+      }
         display: inline-flex;
         align-items: center;
         gap: 14px;
@@ -312,100 +733,6 @@
         font-size: 11px;
         color: var(--text-faint);
         letter-spacing: 0.05em;
-      }
-
-      .landing-main {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 32px;
-        align-items: stretch;
-        padding: 28px 0 24px;
-      }
-      .landing-hero {
-        max-width: 100%;
-      }
-      .landing-top {
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: 32px;
-        flex-wrap: wrap;
-        padding-bottom: 22px;
-        margin-bottom: 6px;
-        border-bottom: 1px solid var(--border-cool);
-      }
-      .landing-top .landing-hero {
-        flex: 1;
-        min-width: 0;
-      }
-      .landing-top-cta {
-        flex-shrink: 0;
-        align-self: flex-end;
-        padding-bottom: 4px;
-      }
-      @media (max-width: 900px) {
-        .landing-top {
-          flex-direction: column;
-          align-items: stretch;
-        }
-        .landing-top-cta {
-          align-self: stretch;
-          flex-wrap: wrap;
-        }
-      }
-      .landing-hero .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 11px;
-        font-weight: 600;
-        color: var(--ib-lime);
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        margin-bottom: 18px;
-        padding: 7px 14px;
-        border: 1px solid rgba(140, 210, 30, 0.28);
-        border-radius: 999px;
-        background: rgba(140, 210, 30, 0.06);
-      }
-      .landing-hero .eyebrow::before {
-        content: "";
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: var(--ib-lime);
-        box-shadow: 0 0 8px var(--ib-lime);
-      }
-      .landing-hero h1 {
-        font-family: "Sora", sans-serif;
-        font-size: 28px;
-        font-weight: 600;
-        letter-spacing: -0.015em;
-        line-height: 1.2;
-        margin: 0 0 8px;
-        color: var(--text-muted);
-        max-width: 720px;
-      }
-      .landing-hero h1 .accent {
-        background: linear-gradient(
-          120deg,
-          var(--ib-lime) 0%,
-          var(--ib-lime-bright) 50%,
-          var(--ib-cyan) 100%
-        );
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-style: italic;
-        font-weight: 700;
-        color: var(--ib-lime);
-      }
-      .landing-hero p {
-        font-size: 14px;
-        line-height: 1.5;
-        color: var(--text-faint);
-        margin: 0;
-        max-width: 660px;
       }
 
       /* ============================================================
@@ -739,93 +1066,6 @@
         }
       }
 
-      .cta-row {
-        display: flex;
-        gap: 14px;
-      }
-      .cta-btn {
-        background: transparent;
-        color: var(--text);
-        padding: 0;
-        font-family: "Sora", sans-serif;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        border: none;
-        display: inline-flex;
-        align-items: stretch;
-        gap: 0;
-        border-radius: 12px;
-        overflow: hidden;
-        border: 1px solid var(--border-cool-2);
-        transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-      }
-      .cta-btn .label {
-        padding: 14px 20px;
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-      }
-      .cta-btn .icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 14px 16px;
-        background: rgba(255, 255, 255, 0.04);
-        border-left: 1px solid var(--border-cool-2);
-        transition: all 0.3s ease;
-      }
-      .cta-btn .icon svg {
-        width: 16px;
-        height: 16px;
-        transition: transform 0.3s ease;
-      }
-      .cta-btn:hover {
-        transform: translateY(-2px);
-        border-color: var(--ib-lime);
-        box-shadow: 0 14px 36px -8px rgba(140, 210, 30, 0.3);
-      }
-      .cta-btn:hover .icon {
-        background: rgba(140, 210, 30, 0.18);
-        border-color: rgba(140, 210, 30, 0.4);
-        color: var(--ib-lime);
-      }
-      .cta-btn:hover .icon svg {
-        transform: translateX(3px);
-      }
-      .cta-btn.primary {
-        background: var(--ib-lime);
-        border-color: var(--ib-lime);
-        color: var(--ib-navy);
-      }
-      .cta-btn.primary .icon {
-        background: rgba(0, 0, 0, 0.12);
-        border-color: rgba(0, 0, 0, 0.18);
-      }
-      .cta-btn.primary:hover {
-        background: var(--ib-lime-bright);
-        border-color: var(--ib-lime-bright);
-      }
-      .cta-btn.primary {
-        background: linear-gradient(
-          135deg,
-          var(--ib-lime),
-          var(--ib-lime-deep)
-        );
-        color: var(--ib-navy);
-        border-color: transparent;
-      }
-      .cta-btn.primary .icon {
-        background: rgba(0, 30, 60, 0.15);
-        border-color: rgba(0, 30, 60, 0.2);
-      }
-      .cta-btn.primary:hover {
-        box-shadow: 0 14px 40px -8px rgba(140, 210, 30, 0.55);
-      }
-      .cta-btn.primary:hover .icon {
-        background: rgba(0, 30, 60, 0.25);
-      }
-
       /* HERO VISUAL — animated network sphere */
       .hero-visual {
         position: relative;
@@ -1140,12 +1380,11 @@
       }
 
       .search-wrap {
-        flex: 1;
-        max-width: 360px;
+        flex: 0 1 360px;
         position: relative;
       }
       .search-input {
-        width: 100%;
+        width: 85%;
         background: rgba(255, 255, 255, 0.04);
         border: 1px solid var(--border-cool);
         border-radius: 10px;
@@ -1192,6 +1431,7 @@
         display: inline-flex;
         gap: 8px;
         align-items: center;
+        margin-left: auto;
       }
       .icon-btn {
         background: transparent;
@@ -3199,6 +3439,15 @@
                 ><span class="pulse"></span>Live data feed</span
               >
               <span class="ts" id="ts-now">—</span>
+              <button class="theme-toggle" id="btn-theme-landing" title="Toggle light / dark mode">
+                <svg class="icon-moon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                </svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4"/>
+                  <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                </svg>
+              </button>
             </div>
           </header>
 
@@ -3206,11 +3455,11 @@
           <main class="landing-main">
             <!-- Top action bar: title + CTAs -->
             <section class="landing-top">
+              <div class="landing-deco"></div>
               <div class="landing-hero">
                 <span class="eyebrow">Capability Map · Live</span>
                 <h1>
-                  Where AI <span class="accent">moves work</span> at Infoblox —
-                  measured every second.
+                  Where AI <span class="accent">moves work</span><br>at Infoblox
                 </h1>
                 <p>
                   A real-time atlas of every business capability, the AI use
@@ -3218,206 +3467,34 @@
                 </p>
               </div>
               <div class="landing-top-cta cta-row">
-                <button
-                  class="cta-btn"
-                  data-nav="graph"
-                  data-layout="hierarchical"
-                >
-                  <span class="label">Hierarchical view</span>
+                <button class="cta-btn" data-nav="graph" data-layout="hierarchical">
                   <span class="icon">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <rect x="9" y="3" width="6" height="4" rx="1" />
                       <rect x="3" y="13" width="6" height="4" rx="1" />
                       <rect x="15" y="13" width="6" height="4" rx="1" />
                       <path d="M12 7v3M6 13v-3h12v3" />
                     </svg>
                   </span>
+                  <span class="label">Hierarchical view</span>
                 </button>
-                <button
-                  class="cta-btn primary"
-                  data-nav="graph"
-                  data-layout="spherical"
-                >
+                <button class="cta-btn primary" data-nav="graph" data-layout="spherical">
                   <span class="label">Explore the network</span>
                   <span class="icon">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.4"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M5 12h14M13 6l6 6-6 6" />
                     </svg>
                   </span>
                 </button>
               </div>
-            </section>
-
-            <!-- Stats hero: hero stat + supporting stats -->
-            <section class="stats-hero" id="stats-hero">
-              <!-- HERO stat (big) -->
-              <div class="stat-card hero" data-stat="hero">
-                <div>
-                  <div class="stat-eyebrow">
-                    Lines of code · written by AI · YTD
-                  </div>
-                  <div class="stat-digits" data-metric="loc-written"></div>
-                  <div class="stat-label">AI authorship across the org</div>
-                  <div class="stat-sub">
-                    Across <b>187</b> active repositories · streaming live from
-                    CI
-                  </div>
-                </div>
-                <div class="stat-spark-wrap">
-                  <svg
-                    class="stat-spark"
-                    viewBox="0 0 400 36"
-                    preserveAspectRatio="none"
-                    aria-hidden="true"
-                  >
-                    <defs>
-                      <linearGradient
-                        id="sparkFill"
-                        x1="0"
-                        y1="0"
-                        x2="0"
-                        y2="1"
-                      >
-                        <stop
-                          offset="0%"
-                          stop-color="#8CD21E"
-                          stop-opacity="0.5"
-                        />
-                        <stop
-                          offset="100%"
-                          stop-color="#8CD21E"
-                          stop-opacity="0"
-                        />
-                      </linearGradient>
-                    </defs>
-                    <path class="spark-fill" id="hero-spark-fill" d="" />
-                    <path class="spark-line" id="hero-spark-line" d="" />
-                    <circle
-                      class="spark-dot"
-                      id="hero-spark-dot"
-                      cx="0"
-                      cy="0"
-                      r="3"
-                    />
-                  </svg>
-                  <div class="stat-trend">
-                    <svg
-                      viewBox="0 0 12 12"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path
-                        d="M2 9 L6 4 L10 8"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                    +14.2% vs last quarter
-                  </div>
-                </div>
-              </div>
-
-              <!-- 2 stacked supporting cards -->
-              <div class="stat-card" data-stat="loc-tested">
-                <div>
-                  <div class="stat-eyebrow">Lines of code · tested by AI</div>
-                  <div class="stat-digits" data-metric="loc-tested"></div>
-                </div>
-                <div class="stat-sub">
-                  <b>71%</b> coverage delta vs. baseline
-                </div>
-              </div>
-              <div class="stat-card" data-stat="hours-saved">
-                <div>
-                  <div class="stat-eyebrow cool">Hours saved · this week</div>
-                  <div class="stat-digits" data-metric="hours-saved"></div>
-                </div>
-                <div class="stat-sub">
-                  Across <b>4,320</b> employees on AI-augmented workflows
-                </div>
-              </div>
-            </section>
-
-            <!-- Mini stats row -->
-            <section class="stats-row">
-              <div class="stat-mini">
-                <svg class="ringbar" viewBox="0 0 38 38">
-                  <circle class="track" cx="19" cy="19" r="16" />
-                  <circle
-                    class="progress"
-                    cx="19"
-                    cy="19"
-                    r="16"
-                    stroke-dasharray="78 100"
-                    pathLength="100"
-                  />
-                </svg>
-                <div class="stat-eyebrow">Capabilities mapped</div>
-                <div class="stat-digits" id="mini-caps"></div>
-                <div class="stat-label">L1 · L2 · L3 hierarchy</div>
-              </div>
-              <div class="stat-mini">
-                <svg class="ringbar" viewBox="0 0 38 38">
-                  <circle class="track" cx="19" cy="19" r="16" />
-                  <circle
-                    class="progress"
-                    cx="19"
-                    cy="19"
-                    r="16"
-                    stroke-dasharray="62 100"
-                    pathLength="100"
-                  />
-                </svg>
-                <div class="stat-eyebrow">Use cases · live</div>
-                <div class="stat-digits" id="mini-uc-live"></div>
-                <div class="stat-label">In production today</div>
-              </div>
-              <div class="stat-mini">
-                <svg class="ringbar" viewBox="0 0 38 38">
-                  <circle class="track" cx="19" cy="19" r="16" />
-                  <circle
-                    class="progress"
-                    cx="19"
-                    cy="19"
-                    r="16"
-                    stroke-dasharray="34 100"
-                    pathLength="100"
-                  />
-                </svg>
-                <div class="stat-eyebrow cool">Use cases · in flight</div>
-                <div class="stat-digits" id="mini-uc-flight"></div>
-                <div class="stat-label">Pilots, betas, rollouts</div>
-              </div>
-              <div class="stat-mini">
-                <svg class="ringbar" viewBox="0 0 38 38">
-                  <circle class="track" cx="19" cy="19" r="16" />
-                  <circle
-                    class="progress"
-                    cx="19"
-                    cy="19"
-                    r="16"
-                    stroke-dasharray="18 100"
-                    pathLength="100"
-                  />
-                </svg>
-                <div class="stat-eyebrow idle">Use cases · queued</div>
-                <div class="stat-digits" id="mini-uc-queued"></div>
-                <div class="stat-label">Roadmap, scoped, idea</div>
+              <div class="landing-meta-strip">
+                <span class="landing-meta-pill"><span class="dot"></span><span id="lm-caps">—</span> capabilities mapped</span>
+                <span class="landing-meta-divider"></span>
+                <span class="landing-meta-pill"><span class="dot"></span><span id="lm-live">—</span> AI use cases live</span>
+                <span class="landing-meta-divider"></span>
+                <span class="landing-meta-pill"><span class="dot cyan"></span><span id="lm-planned">—</span> in flight</span>
+                <span class="landing-meta-divider"></span>
+                <span class="landing-meta-pill"><span class="dot gray"></span>Updated live</span>
               </div>
             </section>
 
@@ -3549,6 +3626,17 @@
               Hierarchical
             </button>
           </div>
+
+          <button class="theme-toggle theme-toggle-appbar" id="btn-theme" title="Toggle light / dark mode">
+            <svg class="icon-moon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+            </svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+          </button>
+          <span class="app-bar-divider"></span>
 
           <div class="search-wrap">
             <svg
@@ -4854,6 +4942,24 @@
         renderCurrentLayout();
         renderPanel();
       });
+
+      // Populate landing meta strip
+      const lmCaps = document.getElementById("lm-caps");
+      const lmLive = document.getElementById("lm-live");
+      const lmPlanned = document.getElementById("lm-planned");
+      if (lmCaps) lmCaps.textContent = DATA.capabilities.length;
+      if (lmLive) lmLive.textContent = DATA.useCases.filter(u => u.status === "completed").length;
+      if (lmPlanned) lmPlanned.textContent = DATA.useCases.filter(u => u.status !== "completed").length;
+
+      // Theme toggle — persist preference in localStorage
+      const html = document.documentElement;
+      if (localStorage.getItem("ib-theme") === "light") html.classList.add("light");
+      function toggleTheme() {
+        html.classList.toggle("light");
+        localStorage.setItem("ib-theme", html.classList.contains("light") ? "light" : "dark");
+      }
+      document.getElementById("btn-theme").addEventListener("click", toggleTheme);
+      document.getElementById("btn-theme-landing").addEventListener("click", toggleTheme);
 
       /* ============================================================
    CURSOR GLOW + RIPPLE
