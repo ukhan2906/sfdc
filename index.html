@@ -115,89 +115,208 @@
       }
 
       /* Surface overrides for light mode */
+      html.light body {
+        background: var(--bg);
+        color: var(--text);
+      }
+      html.light .stage,
+      html.light #stage,
+      html.light .graph-area,
+      html.light #view-graph {
+        background: var(--bg-stage) !important;
+      }
+      html.light .ambient { opacity: 0.15; }
+      html.light .ambient .orb { opacity: 0.4; mix-blend-mode: multiply; }
+
       html.light .app-bar {
         background: rgba(240, 244, 248, 0.92) !important;
         border-bottom-color: rgba(0,0,0,0.1) !important;
       }
-      html.light .side-panel {
-        background: #ffffff !important;
+      html.light .brand-mark .logo svg path[fill="#101820"],
+      html.light .brand-mark .logo svg rect[fill="#101820"] {
+        fill: #15191d !important;
+      }
+
+      /* === Side panel: dark surface in dark mode, light surface in light mode === */
+      html.light .panel {
+        background: linear-gradient(180deg, #ffffff, #f7fafd) !important;
         border-left-color: rgba(0,0,0,0.08) !important;
       }
+      html.light .panel::before {
+        opacity: 0.6 !important;
+      }
+      html.light .panel-header {
+        border-bottom-color: rgba(0,0,0,0.07) !important;
+      }
+      html.light .panel-eyebrow {
+        color: #3a7a00 !important;
+      }
+      html.light .panel-eyebrow::before {
+        background: #3a7a00 !important;
+        box-shadow: 0 0 6px rgba(58, 122, 0, 0.5) !important;
+      }
+      html.light .panel-title {
+        color: #0d1f33 !important;
+      }
+      html.light .panel-meta {
+        color: var(--text-muted) !important;
+      }
+      html.light .pill {
+        background: rgba(0, 0, 0, 0.04) !important;
+        border-color: rgba(0, 0, 0, 0.1) !important;
+        color: var(--text-muted) !important;
+      }
+      html.light .pill.completed {
+        background: rgba(140, 210, 30, 0.15) !important;
+        border-color: rgba(140, 210, 30, 0.4) !important;
+        color: #3a6600 !important;
+      }
+      html.light .panel-body { color: var(--text) !important; }
+      html.light .uc-card {
+        background: #ffffff !important;
+        border-color: rgba(0,0,0,0.1) !important;
+        color: var(--text) !important;
+      }
+      html.light .uc-card .uc-title { color: var(--text) !important; }
+      html.light .uc-card .k { color: var(--text-faint) !important; }
+      html.light .uc-card .v { color: var(--text) !important; }
+      html.light .uc-card .v.value { color: #3a7a00 !important; }
+      html.light .uc-card:hover {
+        border-color: rgba(140,210,30,0.4) !important;
+      }
+      html.light .uc-card.completed {
+        background: linear-gradient(135deg, #f7fce6, #f0f9d8) !important;
+        border-color: rgba(140, 210, 30, 0.35) !important;
+      }
+      html.light .uc-card.completed::before {
+        background: var(--ib-lime) !important;
+      }
+
+      /* === Tree / hierarchical cards === */
       html.light .py-card {
         background: linear-gradient(135deg, #ffffff, #f5f8fc) !important;
         border-color: rgba(0,0,0,0.1) !important;
         color: var(--text) !important;
       }
+      html.light .py-card .py-card-title { color: var(--text) !important; }
+      html.light .py-card .py-card-subtitle { color: var(--text-muted) !important; }
+      html.light .py-card .py-card-status { color: #3a7a00 !important; }
       html.light .py-card:hover {
         border-color: rgba(100, 160, 30, 0.45) !important;
         box-shadow: 0 8px 28px rgba(0,0,0,0.12) !important;
       }
       html.light .py-card.has-ai {
-        background: linear-gradient(135deg, #f4fbea, #edf8d8) !important;
+        background: linear-gradient(135deg, #f7fce6, #ecf7d5) !important;
+        border-color: rgba(140, 210, 30, 0.4) !important;
       }
+      html.light .py-card.has-ai .py-card-title { color: #15191d !important; }
+
       html.light .tree-col {
         background: rgba(255,255,255,0.7) !important;
         border-color: rgba(0,0,0,0.07) !important;
       }
+      html.light .tree-col-head .name { color: var(--text) !important; }
       html.light .tree-l1 {
-        background: rgba(255,255,255,0.8) !important;
-        border-color: rgba(0,0,0,0.07) !important;
+        background: rgba(255,255,255,0.85) !important;
+        border-color: rgba(0,0,0,0.08) !important;
       }
+      html.light .tree-l1 .title { color: var(--text) !important; }
+      html.light .tree-l1 .sub { color: var(--text-muted) !important; }
       html.light .tree-l1.has-ai {
-        background: linear-gradient(135deg, rgba(244,251,234,0.9), rgba(237,248,216,0.8)) !important;
+        background: linear-gradient(135deg, rgba(247, 252, 230, 0.95), rgba(236, 247, 213, 0.9)) !important;
       }
+      html.light .tree-l1.has-ai .title { color: #15191d !important; }
       html.light .tree-l2 {
-        color: var(--text-muted);
+        color: var(--text-muted) !important;
       }
+      html.light .tree-l2 .name { color: var(--text-muted) !important; }
       html.light .tree-l2:hover {
         background: rgba(140,210,30,0.08) !important;
         color: var(--text) !important;
       }
+      html.light .tree-l2:hover .name { color: var(--text) !important; }
+      html.light .tree-l2.has-ai .name { color: #15191d !important; font-weight: 600; }
+
+      /* === App bar buttons / search === */
       html.light .layout-btn,
       html.light .reset-btn,
-      html.light .icon-btn {
-        background: rgba(0,0,0,0.05) !important;
+      html.light .icon-btn,
+      html.light .pill-btn {
+        background: rgba(0,0,0,0.04) !important;
         border-color: rgba(0,0,0,0.1) !important;
         color: var(--text-muted) !important;
       }
       html.light .layout-btn:hover,
       html.light .reset-btn:hover,
-      html.light .icon-btn:hover {
-        background: rgba(0,0,0,0.09) !important;
+      html.light .icon-btn:hover,
+      html.light .pill-btn:hover {
+        background: rgba(0,0,0,0.08) !important;
         color: var(--text) !important;
       }
-      html.light .layout-btn.active {
-        background: rgba(140,210,30,0.15) !important;
-        border-color: rgba(140,210,30,0.4) !important;
+      html.light .layout-btn.active,
+      html.light .layout-switcher button.active {
+        background: rgba(140,210,30,0.18) !important;
+        border-color: rgba(140,210,30,0.5) !important;
         color: #3a6600 !important;
       }
+      html.light .layout-switcher .indicator {
+        background: rgba(140, 210, 30, 0.18) !important;
+        border-color: rgba(140, 210, 30, 0.5) !important;
+      }
       html.light .search-input {
-        background: rgba(255,255,255,0.8) !important;
+        background: rgba(255,255,255,0.9) !important;
         border-color: rgba(0,0,0,0.12) !important;
         color: var(--text) !important;
       }
+      html.light .search-input::placeholder { color: var(--text-faint) !important; }
       html.light .search-input:focus {
         border-color: rgba(140,210,30,0.5) !important;
         background: #fff !important;
+        box-shadow: 0 0 0 3px rgba(140,210,30,0.12) !important;
       }
-      html.light .uc-card {
-        background: #ffffff !important;
-        border-color: rgba(0,0,0,0.08) !important;
-      }
-      html.light .uc-card:hover {
-        border-color: rgba(140,210,30,0.4) !important;
-      }
-      html.light .section-label {
+      html.light .search-icon { color: var(--text-faint) !important; }
+      html.light .search-kbd {
         color: var(--text-faint) !important;
-        border-bottom-color: rgba(0,0,0,0.07) !important;
+        border-color: rgba(0,0,0,0.12) !important;
       }
-      html.light .panel-group-tag {
-        background: rgba(0,0,0,0.06) !important;
+      html.light .crumb-trail .crumb,
+      html.light .crumb-context-trail .crumb {
         color: var(--text-muted) !important;
       }
-      html.light .panel-title {
+      html.light .crumb-trail .crumb:hover,
+      html.light .crumb-context-trail .crumb:hover {
+        background: rgba(0,0,0,0.05) !important;
         color: var(--text) !important;
       }
+      html.light .crumb-trail .crumb.current,
+      html.light .crumb-context-trail .crumb.current {
+        color: #3a6600 !important;
+        background: rgba(140, 210, 30, 0.15) !important;
+      }
+      html.light .crumb-trail .sep,
+      html.light .crumb-context-trail .sep { color: var(--text-faint) !important; }
+
+      /* === Legend / help corner === */
+      html.light .legend-corner {
+        background: rgba(255, 255, 255, 0.85) !important;
+        border-color: rgba(0,0,0,0.08) !important;
+        color: var(--text-muted) !important;
+        backdrop-filter: blur(10px);
+      }
+      html.light .legend-corner .dot { color: var(--text-muted) !important; }
+      html.light .help-corner {
+        background: rgba(255, 255, 255, 0.85) !important;
+        border-color: rgba(0,0,0,0.08) !important;
+        color: var(--text-muted) !important;
+        backdrop-filter: blur(10px);
+      }
+      html.light .help-corner kbd {
+        background: rgba(0,0,0,0.06) !important;
+        border-color: rgba(0,0,0,0.12) !important;
+        color: var(--text) !important;
+      }
+
+      /* === Filter bar / chips === */
       html.light .filter-bar {
         background: rgba(240,244,248,0.85) !important;
         border-bottom-color: rgba(0,0,0,0.07) !important;
@@ -212,10 +331,80 @@
         border-color: rgba(140,210,30,0.4) !important;
         color: #3a6600 !important;
       }
-      html.light .ambient { opacity: 0.3; }
+
+      /* === Section / sub-elements === */
+      html.light .section-label {
+        color: var(--text-faint) !important;
+        border-bottom-color: rgba(0,0,0,0.07) !important;
+      }
+      html.light .panel-group-tag {
+        background: rgba(0,0,0,0.06) !important;
+        color: var(--text-muted) !important;
+      }
+      html.light .child-link { color: var(--text-muted) !important; }
+      html.light .child-link:hover {
+        background: rgba(140,210,30,0.08) !important;
+        color: var(--text) !important;
+        border-color: rgba(140, 210, 30, 0.25) !important;
+      }
+      html.light .child-link .cl-name { color: var(--text) !important; }
+
+      /* === Spherical SVG node texts === */
       html.light .node circle { stroke-opacity: 0.5; }
-      html.light .crumb { color: var(--text-muted) !important; }
-      html.light .crumb.current { color: var(--text) !important; }
+      html.light .node text {
+        stroke: rgba(255, 255, 255, 0.95) !important;
+        stroke-width: 3.5px !important;
+      }
+      html.light .node.level-0 text { fill: #0d1f33 !important; }
+      html.light .node.level-1 text { fill: #0d1f33 !important; }
+      html.light .node.level-2 text { fill: #6e8aa4 !important; opacity: 0.85; }
+
+      /* === Tree-toolbar === */
+      html.light .tree-toolbar {
+        background: rgba(255, 255, 255, 0.7) !important;
+        border-color: rgba(0,0,0,0.08) !important;
+      }
+      html.light .tree-toolbar .stat { color: var(--text-muted) !important; }
+      html.light .tree-toolbar .stat b { color: var(--text) !important; }
+      html.light .tree-toolbar .stat-divider { background: rgba(0,0,0,0.12) !important; }
+      html.light .tree-toolbar .legend-chip { color: var(--text-muted) !important; }
+
+      /* === Search results panel === */
+      html.light .search-results {
+        background: #ffffff !important;
+        border-color: rgba(0,0,0,0.1) !important;
+      }
+      html.light .search-cap-row,
+      html.light .search-uc-row {
+        background: rgba(0,0,0,0.02) !important;
+        border-color: rgba(0,0,0,0.06) !important;
+      }
+      html.light .search-cap-row:hover,
+      html.light .search-uc-row:hover {
+        background: rgba(140,210,30,0.06) !important;
+      }
+      html.light .sc-name,
+      html.light .su-title { color: var(--text) !important; }
+      html.light .sc-crumbs,
+      html.light .su-crumbs,
+      html.light .su-desc { color: var(--text-muted) !important; }
+      html.light .su-pill {
+        background: rgba(0,0,0,0.05) !important;
+        color: var(--text-muted) !important;
+      }
+      html.light .su-pill.live {
+        background: rgba(140,210,30,0.18) !important;
+        color: #3a6600 !important;
+      }
+      html.light .su-chip {
+        background: rgba(0,0,0,0.05) !important;
+        color: var(--text-muted) !important;
+        border-color: rgba(0,0,0,0.08) !important;
+      }
+      html.light .empty {
+        color: var(--text-muted) !important;
+      }
+      html.light .empty .hint { color: var(--text-faint) !important; }
 
       /* Landing page theme toggle — sized to match CTA buttons */
       .theme-toggle-landing {
@@ -289,6 +478,41 @@
       html.light .theme-toggle:hover {
         background: rgba(0,0,0,0.09) !important;
         color: var(--text) !important;
+      }
+
+      /* App bar back button */
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        height: 32px;
+        padding: 0 12px 0 10px;
+        border-radius: 8px;
+        border: 1px solid var(--border-cool-2);
+        background: rgba(255,255,255,0.04);
+        color: var(--text-muted);
+        font-size: 12px;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        transition: all 0.18s ease;
+        flex-shrink: 0;
+      }
+      .back-btn:hover {
+        background: rgba(140,210,30,0.12);
+        border-color: rgba(140,210,30,0.4);
+        color: var(--ib-lime);
+        transform: translateX(-2px);
+      }
+      html.light .back-btn {
+        background: rgba(0,0,0,0.04) !important;
+        border-color: rgba(0,0,0,0.1) !important;
+        color: var(--text-muted) !important;
+      }
+      html.light .back-btn:hover {
+        background: rgba(140,210,30,0.12) !important;
+        border-color: rgba(140,210,30,0.45) !important;
+        color: #3a6600 !important;
       }
 
       /* Vertical divider between groups in the app bar */
@@ -1328,6 +1552,38 @@
         font-size: 11px;
       }
 
+      /* Inline breadcrumb trail when drilled into spherical/clustered view */
+      .crumb-context-trail {
+        display: inline-flex;
+        align-items: center;
+        gap: 0;
+        font-size: 12px;
+      }
+      .crumb-context-trail .crumb {
+        padding: 5px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        color: var(--text-muted);
+        font-weight: 500;
+        transition: all 0.15s ease;
+      }
+      .crumb-context-trail .crumb:hover {
+        background: var(--bg-elev);
+        color: var(--text);
+      }
+      .crumb-context-trail .crumb.current {
+        color: var(--ib-lime);
+        background: rgba(140, 210, 30, 0.1);
+        font-weight: 600;
+      }
+      .crumb-context-trail .sep {
+        color: var(--text-faint);
+        font-size: 11px;
+      }
+      html.light .crumb-context-trail .crumb.current {
+        color: #3a6600 !important;
+      }
+
       .layout-switcher {
         display: inline-flex;
         background: rgba(255, 255, 255, 0.04);
@@ -1645,8 +1901,8 @@
         opacity: 0.06;
       }
       .link.hover-glow {
-        stroke: url(#linkGlow);
-        stroke-width: 2;
+        stroke: var(--ib-lime);
+        stroke-width: 2.2;
         opacity: 1;
         filter: drop-shadow(0 0 6px var(--ok-glow));
         stroke-dasharray: 6 4;
@@ -1656,6 +1912,33 @@
         to {
           stroke-dashoffset: -20;
         }
+      }
+
+      /* ── Neighborhood spotlight on hover (matches reference look) ── */
+      .node.spotlight .shape-wrap {
+        transform: scale(1.5);
+      }
+      .node.spotlight:hover .shape-wrap {
+        transform: scale(1.65);
+      }
+      .node.spotlight .shape {
+        stroke: #ffffff;
+        stroke-width: 2.5;
+        filter:
+          drop-shadow(0 0 26px var(--ok-glow))
+          drop-shadow(0 0 10px rgba(255, 255, 255, 0.7));
+      }
+      html.light .node.spotlight .shape {
+        stroke: #15191d;
+        stroke-width: 2.5;
+        filter:
+          drop-shadow(0 0 22px rgba(58, 122, 0, 0.85))
+          drop-shadow(0 0 8px rgba(255, 255, 255, 0.85));
+      }
+      .node.spotlight text {
+        font-weight: 800 !important;
+        fill: var(--text) !important;
+        opacity: 1 !important;
       }
 
       .node {
@@ -1689,27 +1972,30 @@
         font-family: "Sora", "Inter", sans-serif;
       }
       .node.level-0 text {
-        font-size: 16px;
-        font-weight: 700;
+        font-size: 17px;
+        font-weight: 800;
         fill: #fff;
         letter-spacing: -0.01em;
       }
       .node.level-1 text {
-        font-size: 12.5px;
-        font-weight: 600;
-        fill: #e5edf4;
+        font-size: 13px;
+        font-weight: 700;
+        fill: #ffffff;
         letter-spacing: -0.005em;
       }
       .node.level-2 text {
-        font-size: 11px;
-        font-weight: 600;
-        fill: #c8d4df;
-        opacity: 0.95;
+        font-size: 10.5px;
+        font-weight: 500;
+        fill: #6e8aa4;
+        opacity: 0.85;
       }
       .node.level-3 text {
         font-size: 10px;
         fill: var(--text-muted);
       }
+      /* Light mode: dial down L2 even further */
+      html.light .node.level-1 text { fill: #0d1f33; }
+      html.light .node.level-2 text { fill: #95aac0; opacity: 0.85; }
 
       .node.plain .shape {
         fill: var(--gray-node);
@@ -1833,17 +2119,20 @@
         transition: opacity 0.3s ease;
       }
       .group-arc-label {
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.22em;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.25em;
         text-transform: uppercase;
         pointer-events: none;
-        opacity: 0.95;
+        opacity: 1;
         paint-order: stroke fill;
-        stroke: rgba(4, 16, 31, 0.9);
-        stroke-width: 4px;
+        stroke: rgba(4, 16, 31, 0.92);
+        stroke-width: 5px;
         stroke-linejoin: round;
         font-family: "Sora", sans-serif;
+      }
+      html.light .group-arc-label {
+        stroke: rgba(255, 255, 255, 0.92);
       }
 
       /* ============================================================
@@ -3574,6 +3863,12 @@
             <span class="tag">Enterprise AI</span>
           </div>
           <div class="divider"></div>
+          <button class="back-btn" id="btn-back" style="display:none" title="Back to overview">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+            Back
+          </button>
           <div class="crumb-trail" id="crumb-trail">
             <span class="crumb current" data-nav="landing">Home</span>
             <span class="sep">/</span>
@@ -4881,6 +5176,46 @@
         );
       });
 
+      function updateSphericalBreadcrumb() {
+        const ctx = document.getElementById("crumb-context");
+        if (!ctx) return;
+        if (state.focus === ROOT) {
+          // Reset to single label
+          ctx.className = "crumb current";
+          const labels = {
+            spherical: "Network view",
+            clustered: "Clustered view",
+            hierarchical: "Hierarchical view",
+          };
+          ctx.textContent = labels[state.layout] || "View";
+          return;
+        }
+        // Trail mode — strip styling so children render naturally
+        ctx.className = "crumb-context-trail";
+        const trail = [];
+        let c = state.focus;
+        while (c && c !== ROOT) {
+          trail.unshift(c);
+          c = parentOf(c);
+        }
+        ctx.innerHTML =
+          `<span class="crumb" data-fcrumb="root">All functions</span>` +
+          trail
+            .map(
+              (c, i) =>
+                `<span class="sep" style="margin:0 4px">›</span>` +
+                `<span class="crumb ${i === trail.length - 1 ? "current" : ""}" data-fcrumb="${c.id}">${c.name}</span>`,
+            )
+            .join("");
+        ctx.querySelectorAll("[data-fcrumb]").forEach((el) =>
+          el.addEventListener("click", () => {
+            const id = el.dataset.fcrumb;
+            state.focus = id === "root" ? ROOT : CAPS_BY_ID.get(id);
+            renderSVG();
+            renderPanel();
+          }),
+        );
+      }
       function applyLayoutSwitcher() {
         document
           .querySelectorAll("#layout-switcher button")
@@ -4888,14 +5223,7 @@
             b.classList.toggle("active", b.dataset.layout === state.layout),
           );
         updateLSIndicator();
-        // Update breadcrumb context
-        const labels = {
-          spherical: "Network view",
-          clustered: "Clustered view",
-          hierarchical: "Hierarchical view",
-        };
-        const ctx = document.getElementById("crumb-context");
-        if (ctx) ctx.textContent = labels[state.layout] || "View";
+        updateSphericalBreadcrumb();
       }
       function updateLSIndicator() {
         const ind = document.getElementById("ls-indicator");
@@ -4941,7 +5269,42 @@
         searchInput.value = "";
         renderCurrentLayout();
         renderPanel();
+        updateBackButton();
       });
+
+      // ── Back button: pops one level up in current view ──
+      const btnBack = document.getElementById("btn-back");
+      function updateBackButton() {
+        if (!btnBack) return;
+        let canGoBack = false;
+        if (state.layout === "hierarchical") {
+          canGoBack = !!state.pyramidFocus;
+        } else {
+          canGoBack = state.focus && state.focus !== ROOT;
+        }
+        btnBack.style.display = canGoBack ? "inline-flex" : "none";
+      }
+      if (btnBack) {
+        btnBack.addEventListener("click", () => {
+          if (state.layout === "hierarchical") {
+            const cur = state.pyramidFocus;
+            if (!cur) return;
+            const parent = parentOf(cur);
+            state.pyramidFocus = parent && parent !== ROOT ? parent : null;
+            renderPyramid();
+          } else {
+            const cur = state.focus;
+            if (!cur || cur === ROOT) return;
+            const parent = parentOf(cur);
+            state.focus = parent || ROOT;
+            renderSVG();
+          }
+          renderPanel();
+          updateBackButton();
+        });
+      }
+      // Re-poll visibility periodically so it stays in sync after any state change
+      setInterval(updateBackButton, 250);
 
       // Populate landing meta strip
       const lmCaps = document.getElementById("lm-caps");
@@ -5012,7 +5375,7 @@
           )
           .join("");
         el.innerHTML = `
-    <span class="dot"><span class="swatch completed"></span>Completed</span>
+    <span class="dot"><span class="swatch completed"></span>AI live</span>
     <span class="dot"><span class="swatch plain"></span>Not yet impacted</span>
     <span class="sep"></span>${groupDots}`;
       }
@@ -5134,7 +5497,8 @@
         map.set(focus.id, { x: cx, y: cy });
 
         if (state.layout === "spherical") {
-          const maxR = Math.min(w, h) * 0.34;
+          const maxR = Math.min(w, h) * 0.30;
+          const L2_RING_FACTOR = 2.1; // more breathing room between L1 and L2
           const anchors = new Map();
           if (focus === ROOT) {
             const buckets = new Map(DATA.groups.map((g) => [g.id, []]));
@@ -5157,7 +5521,7 @@
                   const subT = gN === 1 ? 0 : j / (gN - 1) - 0.5;
                   const subAng =
                     ang + subT * subSpan * (cfg.span / Math.max(n, 1)) * 0.9;
-                  const subR = maxR * 1.6;
+                  const subR = maxR * L2_RING_FACTOR;
                   map.set(gc.id, {
                     x: cx + Math.cos(subAng) * subR,
                     y: cy + Math.sin(subAng) * subR,
@@ -5178,8 +5542,8 @@
                 const gn = childrenOf(k).length;
                 const sAng = ang + (j / Math.max(gn - 1, 1) - 0.5) * 0.6;
                 map.set(gc.id, {
-                  x: cx + Math.cos(sAng) * maxR * 1.6,
-                  y: cy + Math.sin(sAng) * maxR * 1.6,
+                  x: cx + Math.cos(sAng) * maxR * L2_RING_FACTOR,
+                  y: cy + Math.sin(sAng) * maxR * L2_RING_FACTOR,
                 });
               });
             });
@@ -5237,7 +5601,8 @@
         arcG.selectAll("*").remove();
         if (state.focus !== ROOT || !anchors || anchors.size === 0) return;
         const ranges = computeGroupAngularRanges(anchors, center.x, center.y);
-        const LABEL_R_EXTRA = 38;
+        // Pull group labels INSIDE the L1 ring, between root and L1
+        const LABEL_R_INNER = ringR * 0.5;
         ranges.forEach((r) => {
           const a0 = r.a0,
             a1 = r.a1;
@@ -5254,8 +5619,8 @@
               `M ${x0} ${y0} A ${ringR} ${ringR} 0 ${large} 1 ${x1} ${y1}`,
             )
             .attr("stroke", r.color);
-          const lx = center.x + Math.cos(r.centerAng) * (ringR + LABEL_R_EXTRA);
-          const ly = center.y + Math.sin(r.centerAng) * (ringR + LABEL_R_EXTRA);
+          const lx = center.x + Math.cos(r.centerAng) * LABEL_R_INNER;
+          const ly = center.y + Math.sin(r.centerAng) * LABEL_R_INNER;
           arcG
             .append("text")
             .attr("class", "group-arc-label")
@@ -5404,16 +5769,24 @@
             });
           drawGroupArcs(anchors, center, ringR);
         } else {
+          // Static layouts (spherical / hierarchical-graph): smoothly transition to new positions
+          const TR_DUR = 650;
+          const TR_EASE = d3.easeCubicInOut;
+          const t = d3.transition().duration(TR_DUR).ease(TR_EASE);
           linkMerged
+            .transition(t)
             .attr("x1", (d) => d.source.x)
             .attr("y1", (d) => d.source.y)
             .attr("x2", (d) => d.target.x)
             .attr("y2", (d) => d.target.y);
-          nodeMerged.attr("transform", (d) => `translate(${d.x},${d.y})`);
+          nodeMerged
+            .transition(t)
+            .attr("transform", (d) => `translate(${d.x},${d.y})`);
           drawGroupArcs(anchors, center, ringR);
         }
 
         applyFiltersAndHover(nodeMerged, linkMerged);
+        updateSphericalBreadcrumb();
 
         // Initial-load animation — only on the very first render of spherical view
         if (!_introPlayed.has(state.layout) && nodeEnter.size() > 0) {
@@ -5452,7 +5825,7 @@
       }
 
       function applyFiltersAndHover(nodeSel, linkSel) {
-        const hoverL1 = state.hoverL1;
+        const hoverNode = state.hoverNode;
         const search = state.search;
         const searchActive = search.length > 0;
         const matchSet = new Set(),
@@ -5486,52 +5859,47 @@
             }
           });
         }
-        const hoverSubtree = new Set();
-        if (hoverL1) {
-          (function collect(c) {
-            hoverSubtree.add(c.id);
-            childrenOf(c).forEach(collect);
-          })(hoverL1);
-          hoverSubtree.add(ROOT.id);
+
+        // ── Neighborhood: hovered node + its parent + its direct children ──
+        // For ROOT this means ROOT + all L1s. For L1 it's L1 + ROOT + its L2 children.
+        // For L2 it's L2 + parent L1.
+        const neighborhood = new Set();
+        if (hoverNode) {
+          neighborhood.add(hoverNode.id);
+          const parent = parentOf(hoverNode);
+          if (parent) neighborhood.add(parent.id);
+          childrenOf(hoverNode).forEach((c) => neighborhood.add(c.id));
         }
 
-        nodeSel.classed("dimmed", (d) => {
-          if (hoverL1 && !hoverSubtree.has(d.id)) return true;
-          if (
-            searchActive &&
-            !matchSet.has(d.id) &&
-            !ancSet.has(d.id) &&
-            d !== ROOT
-          )
-            return true;
-          return false;
-        });
-        linkSel
-          .classed("hover-glow", (d) => {
-            if (!hoverL1) return false;
-            // Suppress hover-glow when search is filtering — avoids the "path from center" artifact
-            // when the hovered L1 itself is filtered out
+        nodeSel
+          .classed("spotlight", (d) => {
+            if (!hoverNode) return false;
+            return neighborhood.has(d.id);
+          })
+          .classed("dimmed", (d) => {
+            if (hoverNode && !neighborhood.has(d.id)) return true;
             if (
               searchActive &&
-              !(matchSet.has(hoverL1.id) || ancSet.has(hoverL1.id))
+              !matchSet.has(d.id) &&
+              !ancSet.has(d.id) &&
+              d !== ROOT
             )
-              return false;
-            // Light up the link from ROOT to the hovered L1, and any link inside its subtree
-            if (d.source.id === ROOT.id && d.target.id === hoverL1.id)
               return true;
-            if (d.target.id === ROOT.id && d.source.id === hoverL1.id)
-              return true;
+            return false;
+          });
+
+        linkSel
+          .classed("hover-glow", (d) => {
+            if (!hoverNode) return false;
+            // Both endpoints must be in the neighborhood for the link to glow
             return (
-              hoverSubtree.has(d.source.id) &&
-              hoverSubtree.has(d.target.id) &&
-              d.source.id !== ROOT.id &&
-              d.target.id !== ROOT.id
+              neighborhood.has(d.source.id) && neighborhood.has(d.target.id)
             );
           })
           .classed("dimmed", (d) => {
             if (
-              hoverL1 &&
-              !(hoverSubtree.has(d.source.id) && hoverSubtree.has(d.target.id))
+              hoverNode &&
+              !(neighborhood.has(d.source.id) && neighborhood.has(d.target.id))
             )
               return true;
             if (
@@ -5541,57 +5909,20 @@
               return true;
             return false;
           });
+
         arcG
           .selectAll(".group-arc, .group-arc-label")
-          .style("opacity", hoverL1 ? 0.2 : null);
+          .style("opacity", hoverNode ? 0.2 : null);
       }
 
       function handleNodeHover(cap, on) {
         if (!on) {
+          state.hoverNode = null;
           state.hoverL1 = null;
-        } else if (cap.level === 1) {
-          // If a search is active and this node is filtered out, don't trigger hover-glow
-          const q = state.search.toLowerCase();
-          if (q) {
-            const ucs = USECASES_BY_CAPABILITY.get(cap.id) || [];
-            const hay = (
-              cap.name +
-              " " +
-              ucs
-                .map(
-                  (u) =>
-                    u.title +
-                    " " +
-                    (u.tool || "") +
-                    " " +
-                    (u.description || ""),
-                )
-                .join(" ")
-            ).toLowerCase();
-            const subtreeMatch = (function check(c) {
-              const ucs = USECASES_BY_CAPABILITY.get(c.id) || [];
-              const hay = (
-                c.name +
-                " " +
-                ucs
-                  .map(
-                    (u) =>
-                      u.title +
-                      " " +
-                      (u.tool || "") +
-                      " " +
-                      (u.description || ""),
-                  )
-                  .join(" ")
-              ).toLowerCase();
-              if (hay.includes(q)) return true;
-              return childrenOf(c).some(check);
-            })(cap);
-            if (!subtreeMatch) return;
-          }
-          state.hoverL1 = cap;
         } else {
-          return;
+          state.hoverNode = cap;
+          // Keep hoverL1 set when hovering an L1 (used by some legacy code paths)
+          state.hoverL1 = cap.level === 1 ? cap : null;
         }
         applyFiltersAndHover(
           nodeG.selectAll("g.node"),
@@ -5629,7 +5960,7 @@
         return "Awaiting AI impact";
       }
       function statusTextFor(cap) {
-        return isCompleted(cap) ? "AI live" : "Planned";
+        return isCompleted(cap) ? "AI live" : "";
       }
       function cardHTML(cap, vtName) {
         const done = isCompleted(cap);
@@ -5638,10 +5969,13 @@
         const haloBorder = done ? "rgba(140,210,30,0.55)" : `${col}80`;
         const vt = vtName ? ` view-transition-name: ${vtName};` : "";
         const style = `--card-border: ${col}33; --halo-col: ${haloCol}; --halo-border: ${haloBorder};${vt}`;
+        const statusHtml = done
+          ? `<div class="py-card-status"><span class="dot"></span>AI live</div>`
+          : "";
         return `<div class="py-card ${done ? "has-ai" : ""}" data-cap="${cap.id}" style="${style}">
     <div class="py-card-title">${cap.name}</div>
     <div class="py-card-subtitle">${subtitleFor(cap)}</div>
-    <div class="py-card-status"><span class="dot"></span>${statusTextFor(cap)}</div>
+    ${statusHtml}
   </div>`;
       }
 
@@ -5727,7 +6061,6 @@
         ).length;
         const toolbar = `<div class="tree-toolbar">
     <span class="legend-chip"><span class="d live"></span>AI live</span>
-    <span class="legend-chip"><span class="d plan"></span>Planned</span>
     <button class="pill-btn" data-tcollapse="all">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M8 3v10"/></svg>
       <span data-collapse-label>Expand all</span>
@@ -5765,7 +6098,7 @@
                 ? `${l2s.length} sub-capabilit${l2s.length === 1 ? "y" : "ies"}${liveL2 > 0 ? ` <span class="pip"></span> <b>${liveL2} live</b>` : ""}`
                 : l1Done
                   ? `<b>AI live</b>`
-                  : `Planned`;
+                  : ``;
             html += `<div class="tree-l1 ${l1Done ? "has-ai" : ""} ${expanded ? "expanded" : ""} ${isSelected ? "selected" : ""} ${l2s.length === 0 ? "no-children" : ""}" style="--halo-col:${haloCol}; --halo-border:${haloBorder}" data-l1-card="${l1.id}">
         <div class="tree-l1-head">
           <span class="toggle" data-l1-toggle="${l1.id}" title="${expanded ? "Collapse" : "Expand"}">
@@ -5859,10 +6192,13 @@
         const vt = vtName ? ` view-transition-name: ${vtName};` : "";
         const style = `--card-border: ${col}33; --halo-col: ${haloCol}; --halo-border: ${haloBorder};${vt}`;
         const go = uc.goLiveDate ? formatDate(uc.goLiveDate) : "TBD";
+        const statusHtml = done
+          ? `<div class="py-card-status"><span class="dot"></span>AI live</div>`
+          : "";
         return `<div class="py-card ${done ? "has-ai" : ""}" data-uc="${uc.id}" style="${style}">
     <div class="py-card-title">${uc.title}</div>
-    <div class="py-card-subtitle">${done ? "Go Live: " + go : "Planned · " + go}</div>
-    <div class="py-card-status"><span class="dot"></span>${done ? "AI live" : "Planned"}</div>
+    <div class="py-card-subtitle">${done ? "Go Live: " + go : "Go Live: " + go}</div>
+    ${statusHtml}
   </div>`;
       }
 
@@ -6172,12 +6508,9 @@
       }
       function ucCardHTML(uc) {
         const done = uc.status === "completed";
-        const mini = done
-          ? `<span class="mini completed">✓ Completed</span>`
-          : `<span class="mini planned">Planned</span>`;
         const goLive = uc.goLiveDate ? formatDate(uc.goLiveDate) : "TBD";
         return `<div class="uc-card ${done ? "completed" : "planned"}">
-    <div class="uc-title">${uc.title} ${mini}</div>
+    <div class="uc-title">${uc.title}</div>
     <div class="uc-row"><div class="k">What</div><div class="v">${uc.description || "(No description)"}</div></div>
     ${uc.tool ? `<div class="uc-row"><div class="k">Tool</div><div class="v">${uc.tool}</div></div>` : ""}
     ${uc.value ? `<div class="uc-row"><div class="k">Value</div><div class="v value">${uc.value}</div></div>` : ""}
@@ -6274,7 +6607,7 @@
         <div class="su-body">
           <div class="su-top">
             <div class="su-title">${_highlight(uc.title, q)}</div>
-            ${done ? `<span class="su-pill live">AI live</span>` : `<span class="su-pill">Planned</span>`}
+            ${done ? `<span class="su-pill live">AI live</span>` : ``}
           </div>
           <div class="su-crumbs">${breadcrumb}</div>
           <div class="su-desc">${_highlight((uc.description || "").slice(0, 140) + (uc.description && uc.description.length > 140 ? "…" : ""), q)}</div>
